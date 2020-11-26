@@ -1,5 +1,6 @@
 import Usuario from "../models/usuario";
 import Proyecto from "../models/proyecto";
+import Tarea from "../models/tarea";
 import bcrypt from "bcryptjs";
 import dotenv from "dotenv";
 import { users } from "../helpers/index";
@@ -12,6 +13,15 @@ const resolvers = {
       return await Proyecto.find({ creator: ctx._id });
     },
     users: async () => await Usuario.find(),
+
+    getTasksByProjects: async (_, { input }, ctx) => {
+      const { project } = input;
+
+      const tasks = await Tarea.find({ creator: ctx._id })
+        .where("project")
+        .equals(project);
+      return tasks;
+    },
   },
   Mutation: {
     createUser: async (root, { input }, ctx) => {
@@ -74,7 +84,7 @@ const resolvers = {
     updateProject: async (root, { input }, ctx) => {
       const { _id } = input;
 
-      let project = await Proyecto.findById({ _id });
+      const project = await Proyecto.findById({ _id });
 
       if (!project) {
         throw new Error("Project does not exist");
@@ -89,7 +99,7 @@ const resolvers = {
     removeProject: async (root, { input }, ctx) => {
       const { _id } = input;
 
-      let project = await Proyecto.findById({ _id });
+      const project = await Proyecto.findById({ _id });
 
       if (!project) {
         throw new Error("Project does not exist");
@@ -102,6 +112,56 @@ const resolvers = {
       await Proyecto.findOneAndDelete({ _id }, input);
 
       return "Project deleted";
+    },
+
+    newTask: async (root, { input }, ctx) => {
+      const { name } = input;
+      const taskExist = await Tarea.findOne({
+        name,
+      });
+
+      if (taskExist) {
+        throw new Error("Task already exist ");
+      }
+
+      try {
+        const task = new Tarea(input);
+        task.creator = ctx._id;
+
+        return await task.save();
+      } catch (error) {
+        console.log(error);
+      }
+    },
+    updateTask: async (root, { input }, ctx) => {
+      const { _id } = input;
+      const task = await Tarea.findById({ _id });
+
+      if (!task) {
+        throw new Error("Task does not exist");
+      }
+
+      if (task.creator.toString() !== ctx._id) {
+        throw new Error("You are not the creator of this task");
+      }
+
+      return await Tarea.findOneAndUpdate({ _id }, input, { new: true });
+    },
+    removeTask: async (root, { input }, ctx) => {
+      const { _id } = input;
+      const task = await Tarea.findById({ _id });
+
+      if (!task) {
+        throw new Error("Task does not exist");
+      }
+
+      if (task.creator.toString() !== ctx._id) {
+        throw new Error("You are not the creator of this task");
+      }
+
+      await Tarea.findOneAndDelete({ _id }, input);
+
+      return "Task deleted";
     },
   },
 };

@@ -4,17 +4,33 @@ const typeDefs = gql`
   type Query {
     projects: [Project!]!
     users: [User!]!
+    getTasksByProjects(input: IDProjectInput): [Task!]!
   }
 
   type Mutation {
+    "USUARIOS"
     createUser(input: UsuarioInput): String
     authUser(input: AuthInput): Token
+
+    "PROYECTOS"
     newProject(input: ProjectInput): Project
     updateProject(input: UpdateProjectInput): Project
     removeProject(input: RemoveProjectInput): String
+
+    "TAREAS"
+    newTask(input: TaskInput): Task
+    updateTask(input: TaskInputUpdate): Task
+    removeTask(input: TaskInputRemove): String
   }
   type Token {
     token: String!
+  }
+
+  type Task {
+    _id: ID!
+    name: String!
+    state: Boolean
+    project: String!
   }
 
   type User {
@@ -42,10 +58,28 @@ const typeDefs = gql`
     name: String!
   }
   input UpdateProjectInput {
-    _id: ID!
-    name: String!
+    _id: ID
+    name: String
   }
   input RemoveProjectInput {
+    _id: ID!
+  }
+  input IDProjectInput {
+    project: String!
+  }
+  input TaskInput {
+    name: String!
+    project: String!
+  }
+
+  input TaskInputUpdate {
+    _id: ID!
+    name: String
+    project: String
+    state: Boolean
+  }
+
+  input TaskInputRemove {
     _id: ID!
   }
 `;
