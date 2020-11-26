@@ -1,0 +1,26 @@
+{
+	"name": "taskManagerBack",
+	"version": "1.0.0",
+	"description": "",
+	"main": "index.js",
+	"scripts": {
+		"start": "node .",
+		"dev": "nodemon ."
+	},
+	"keywords": [],
+	"author": "",
+	"license": "ISC",
+	"dependencies": {
+		"@babel/cli": "^7.12.8",
+		"@babel/core": "^7.12.9",
+		"@babel/node": "^7.12.6",
+		"@babel/preset-env": "^7.12.7",
+		"apollo-server": "^2.16.1",
+		"dotenv": "^8.2.0",
+		"graphql": "^15.3.0",
+		"mongoose": "^5.9.27"
+	},
+	"devDependencies": {
+		"nodemon": "^2.0.4"
+	}
+}
