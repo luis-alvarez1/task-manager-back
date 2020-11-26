@@ -4,8 +4,8 @@
 	"description": "",
 	"main": "index.js",
 	"scripts": {
-		"start": "node .",
-		"dev": "nodemon ."
+		"start": "node -r esm index.js",
+		"dev": "nodemon -r esm index.js "
 	},
 	"keywords": [],
 	"author": "",
@@ -16,8 +16,11 @@
 		"@babel/node": "^7.12.6",
 		"@babel/preset-env": "^7.12.7",
 		"apollo-server": "^2.16.1",
+		"bcryptjs": "^2.4.3",
 		"dotenv": "^8.2.0",
+		"esm": "^3.2.25",
 		"graphql": "^15.3.0",
+		"jsonwebtoken": "^8.5.1",
 		"mongoose": "^5.9.27"
 	},
 	"devDependencies": {
