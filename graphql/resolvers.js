@@ -51,29 +51,26 @@ const resolvers = {
     authUser: async (root, { input }, ctx) => {
       const { email, password } = input;
 
-      const lastUser = await Usuario.findOne({ email });
+      const user = await Usuario.findOne({ email });
 
-      if (!lastUser) {
+      if (!user) {
         throw new Error("User does not exist!");
       }
 
-      const isPasswordCorrect = await bcrypt.compare(
-        password,
-        lastUser.password
-      );
+      const isPasswordCorrect = await bcrypt.compare(password, user.password);
+
       if (!isPasswordCorrect) {
         throw new Error("Incorrect Password!");
       }
 
       return {
-        token: users.createToken(lastUser, process.env.SECRET, "2hr"),
+        token: users.createToken(user, process.env.SECRET, "2hr"),
       };
     },
 
     newProject: async (root, { input }, ctx) => {
       try {
         const proyecto = new Proyecto(input);
-        console.log(ctx._id);
         proyecto.creator = ctx._id;
         return await proyecto.save();
       } catch (error) {

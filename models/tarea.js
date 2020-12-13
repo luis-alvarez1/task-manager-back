@@ -15,7 +15,6 @@ const tareaSchema = new Schema(
       type: Schema.Types.ObjectId,
       ref: "Proyecto",
     },
-
     state: {
       type: Boolean,
       default: false,

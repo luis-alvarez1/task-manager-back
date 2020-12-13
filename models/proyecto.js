@@ -8,7 +8,7 @@ const proyectoSchema = new Schema(
       trim: true,
     },
     creator: {
-      type: Schema.Types.ObjectId,
+      type: Schema.Types.ObjectId, //ID
       ref: "Usuario",
     },
   },
