@@ -8,16 +8,22 @@ const typeDefs = gql`
   }
 
   type Mutation {
-    "USUARIOS"
+    """
+    USUARIOS
+    """
     createUser(input: UsuarioInput): String
     authUser(input: AuthInput): Token
 
-    "PROYECTOS"
+    """
+    PROYECTOS
+    """
     newProject(input: ProjectInput): Project
     updateProject(input: UpdateProjectInput): Project
     removeProject(input: RemoveProjectInput): String
 
-    "TAREAS"
+    """
+    TAREAS
+    """
     newTask(input: TaskInput): Task
     updateTask(input: TaskInputUpdate): Task
     removeTask(input: TaskInputRemove): String
