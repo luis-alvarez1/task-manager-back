@@ -28,6 +28,7 @@ const typeDefs = gql`
     updateTask(input: TaskInputUpdate): Task
     removeTask(input: TaskInputRemove): String
   }
+
   type Token {
     token: String!
   }
