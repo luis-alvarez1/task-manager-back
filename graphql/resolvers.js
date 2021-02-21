@@ -64,7 +64,7 @@ const resolvers = {
       }
 
       return {
-        token: users.createToken(user, process.env.SECRET, "2hr"),
+        token: users.createToken(user, process.env.SECRET, "10hr"),
       };
     },
 
