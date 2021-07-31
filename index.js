@@ -9,6 +9,8 @@ connect();
 const server = new ApolloServer({
   typeDefs,
   resolvers,
+  introspection: true,
+  playground: true,
   context: ({ req }) => {
     const token = req.headers['authorization'] || null;
     if (token) {
